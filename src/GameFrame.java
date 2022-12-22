@@ -16,6 +16,7 @@ public class GameFrame extends JFrame {
         this.setResizable(false);
         this.setBackground(new Color(0x1c2a63));
         this.pack();
+        this.setLocationRelativeTo(null);
 
         this.setVisible(true);
 

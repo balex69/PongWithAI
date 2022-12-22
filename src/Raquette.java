@@ -7,7 +7,9 @@ public class Raquette extends Rectangle {//implements ActionListen {
 
     int id;
     int yVitesse;
-    Raquette() {
+    Raquette(int x, int y, int LARGEUR_RAQUETTE, int HAUTEUR_RAQUETTE, int id) {
+        super(x,y,LARGEUR_RAQUETTE,HAUTEUR_RAQUETTE);
+        this.id=id;
 
     }
 
@@ -24,6 +26,13 @@ public class Raquette extends Rectangle {//implements ActionListen {
 
     }
     public void draw(Graphics g){
+        if(id==1) {
+            g.setColor(new Color(0x2d7527));
+        }
+        else {
+            g.setColor(new Color(0x75273c));
+        }
+        g.fillRect(x,y,width,height);
 
     }
 
