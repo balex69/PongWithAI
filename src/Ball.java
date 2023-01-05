@@ -7,8 +7,7 @@ import java.util.*;
 
 public class Ball extends Rectangle{
 
-    int xVelocity;
-    int yVelocity;
+    int xVelocity, yVelocity, initialSpeed = 2;
     Random random;
 
     /*private final BufferedImage imageBall; // (c) Freepik
@@ -28,12 +27,12 @@ public class Ball extends Rectangle{
         int randomXDirection = random.nextInt(2);
         if(randomXDirection == 0)
             randomXDirection--;
-        setXDirection(randomXDirection);
+        setXDirection(randomXDirection*initialSpeed);
 
         int randomYDirection = random.nextInt(2);
         if(randomYDirection == 0)
             randomYDirection--;
-        setYDirection(randomYDirection);
+        setYDirection(randomYDirection*initialSpeed);
 
     }
 
@@ -43,9 +42,11 @@ public class Ball extends Rectangle{
 
     }
     public void setYDirection(int randomYDirection) {
+
         yVelocity = randomYDirection;
     }
     public void move() {
+
         x += xVelocity;
         y += yVelocity;
 

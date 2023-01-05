@@ -73,6 +73,14 @@ public class GamePanel extends JPanel implements Runnable{
             paddle2.y = GAME_HEIGHT-PADDLE_HEIGHT;
 
         //checks ball with bounds
+        if(ball.y <= 0 || ball.y >= (GAME_HEIGHT-BALL_DIAMETER))
+            ball.yVelocity *= -1;
+
+        //checks ball with paddles
+        if(ball.intersects(paddle1) || ball.intersects(paddle2)) {
+            ball.xVelocity *= -1;
+            ball.xVelocity++;
+        }
 
     }
     public void run() {
