@@ -5,29 +5,28 @@ import javax.swing.*;
 
 public class GamePanel extends JPanel implements Runnable{
 
-    static final int GAME_LARGEUR = 1000, GAME_HAUTEUR = 600;
-    static final Dimension TAILLE_ECRAN = new Dimension(GAME_LARGEUR,GAME_HAUTEUR);
-    static final int DIAMETRE_BALLE = 24;
-    static final int HAUTEUR_RAQUETTE = 100, LARGEUR_RAQUETTE = 24;
+    static final int GAME_WIDTH = 1000, GAME_HEIGHT = 600;
+    static final Dimension SCREEN_SIZE = new Dimension(GAME_WIDTH, GAME_HEIGHT);
+    static final int BALL_DIAMETER = 24;
+    static final int PADDLE_WIDTH = 24, PADDLE_HEIGHT = 100;
     Thread gameThread;
     Image image;
     Graphics graphics;
     Random random;
-    Raquette raquette1;
-    Raquette raquette2;
-    Balle balle;
+    Paddle paddle1, paddle2;
+    Ball ball;
     Score score;
 
     GamePanel(){
 
-        reRaquettes();
-        reBalle();
+        rePaddles();
+        reBall();
 
-        score = new Score(GAME_LARGEUR, GAME_HAUTEUR);
+        score = new Score(GAME_WIDTH, GAME_HEIGHT);
 
         this.setFocusable(true);
-        this.addKeyListener(new ActionListen());
-        this.setPreferredSize(TAILLE_ECRAN);
+        this.addKeyListener(new AL());
+        this.setPreferredSize(SCREEN_SIZE);
 
         gameThread = new Thread(this);
         gameThread.start();
@@ -35,12 +34,13 @@ public class GamePanel extends JPanel implements Runnable{
 
     }
 
-    public void reBalle() {
-
+    public void reBall() {
+        random = new Random();
+        ball = new Ball((GAME_WIDTH/2)-(BALL_DIAMETER/2),random.nextInt(GAME_HEIGHT-BALL_DIAMETER),BALL_DIAMETER,BALL_DIAMETER);
     }
-    public void reRaquettes() {
-        raquette1 = new Raquette(0,(GAME_HAUTEUR/2)-(HAUTEUR_RAQUETTE/2),LARGEUR_RAQUETTE,HAUTEUR_RAQUETTE,1);
-        raquette2 = new Raquette(GAME_LARGEUR-LARGEUR_RAQUETTE,(GAME_HAUTEUR/2)-(HAUTEUR_RAQUETTE/2),LARGEUR_RAQUETTE,HAUTEUR_RAQUETTE,2);
+    public void rePaddles() {
+        paddle1 = new Paddle(0,(GAME_HEIGHT /2)-(PADDLE_HEIGHT /2), PADDLE_WIDTH, PADDLE_HEIGHT,1);
+        paddle2 = new Paddle(GAME_WIDTH - PADDLE_WIDTH,(GAME_HEIGHT /2)-(PADDLE_HEIGHT /2), PADDLE_WIDTH, PADDLE_HEIGHT,2);
     }
     public void paint(Graphics g) {
         image = createImage(getWidth(),getHeight());
@@ -49,25 +49,42 @@ public class GamePanel extends JPanel implements Runnable{
         g.drawImage(image, 0, 0, this);
     }
     public void draw(Graphics g) {
-        raquette1.draw(g);
-        raquette2.draw(g);
+        paddle1.draw(g);
+        paddle2.draw(g);
+        ball.draw(g);
+        //score.draw(g);
+        Toolkit.getDefaultToolkit().sync();
     }
     public void move() {
-
+        paddle1.move();
+        paddle2.move();
+        ball.move();
     }
     public void collision() {
+        //checks paddles with bounds
+        if(paddle1.y <= 0)
+            paddle1.y = 0;
+        if(paddle1.y >= (GAME_HEIGHT-PADDLE_HEIGHT))
+            paddle1.y = GAME_HEIGHT-PADDLE_HEIGHT;
+
+        if(paddle2.y <= 0)
+            paddle2.y = 0;
+        if(paddle2.y >= (GAME_HEIGHT-PADDLE_HEIGHT))
+            paddle2.y = GAME_HEIGHT-PADDLE_HEIGHT;
+
+        //checks ball with bounds
 
     }
     public void run() {
-        long dernierTemps = System.nanoTime();
-        double nbDeTicks = 60.0;
-        double ns = 1000000000 / nbDeTicks;
+        long lastTime = System.nanoTime();
+        double tickNumber = 60.0;
+        double ns = 1000000000 / tickNumber;
         double delta = 0;
         while(true) {
-            long maintenant = System.nanoTime();
-            delta += (maintenant - dernierTemps);
-            dernierTemps = maintenant;
-            if(delta >=1) {
+            long now = System.nanoTime();
+            delta += (now - lastTime)/ns;
+            lastTime = now;
+            if(delta >= 1) {
                 move();
                 collision();
                 repaint();
@@ -76,14 +93,14 @@ public class GamePanel extends JPanel implements Runnable{
         }
 
     }
-    public class ActionListen extends KeyAdapter {
-        public void appuiTouche(KeyEvent e){
-            raquette1.appuiTouche(e);
-            raquette2.appuiTouche(e);
+    public class AL extends KeyAdapter {
+        public void keyPressed(KeyEvent e) {
+            paddle1.keyPressed(e);
+            paddle2.keyPressed(e);
         }
-        public void relacheTouche(KeyEvent e){
-            raquette1.relacheTouche(e);
-            raquette2.relacheTouche(e);
+        public void keyReleased(KeyEvent e) {
+            paddle1.keyReleased(e);
+            paddle2.keyReleased(e);
         }
     }
 }

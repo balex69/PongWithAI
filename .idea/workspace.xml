@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="da5421c6-cd49-4f80-8f64-d3cac8db1910" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Balle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ball.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GamePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Raquette.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Paddle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Score.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Score.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +41,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "last_opened_file_path": "D:/eclipse/eclipse-workspace/PongWithAI/src/res/img"
   }
 }]]></component>

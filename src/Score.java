@@ -1,15 +1,12 @@
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import javax.swing.*;
 
 public class Score extends Rectangle{
 
-    static int GAME_LARGEUR;
-    static int GAME_HAUTEUR;
-    int joueur1;
-    int joueur2;
-    Score(int GAME_LARGEUR, int GAME_HAUTEUR){
+    static int GAME_WIDTH;
+    static int GAME_HEIGHT;
+    int player1;
+    int player2;
+    Score(int GAME_WIDTH, int GAME_HEIGHT){
 
     }
 
