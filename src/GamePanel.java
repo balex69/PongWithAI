@@ -52,7 +52,7 @@ public class GamePanel extends JPanel implements Runnable{
         paddle1.draw(g);
         paddle2.draw(g);
         ball.draw(g);
-        //score.draw(g);
+        score.draw(g);
         Toolkit.getDefaultToolkit().sync();
     }
     public void move() {
@@ -73,13 +73,48 @@ public class GamePanel extends JPanel implements Runnable{
             paddle2.y = GAME_HEIGHT-PADDLE_HEIGHT;
 
         //checks ball with bounds
-        if(ball.y <= 0 || ball.y >= (GAME_HEIGHT-BALL_DIAMETER))
-            ball.yVelocity *= -1;
+        //if(ball.y <= 0 || ball.y >= (GAME_HEIGHT-BALL_DIAMETER))
+        if(ball.y <=0 )
+            ball.setYDirection(-ball.yVelocity);
+        if(ball.y >= GAME_HEIGHT-BALL_DIAMETER) {
+            ball.setYDirection(-ball.yVelocity);
+        }
 
         //checks ball with paddles
-        if(ball.intersects(paddle1) || ball.intersects(paddle2)) {
-            ball.xVelocity *= -1;
+        if(ball.intersects(paddle1)) {
+            //ball.xVelocity = -(ball.xVelocity+1);
+            //ball.xVelocity *= -1;
+            ball.xVelocity = Math.abs(ball.xVelocity);
             ball.xVelocity++;
+            ball.setXDirection(ball.xVelocity);
+
+            if(ball.yVelocity>0)
+                ball.yVelocity++;
+            else ball.yVelocity--;
+            ball.setYDirection(ball.yVelocity);
+        }
+
+        if(ball.intersects(paddle2)) {
+            ball.xVelocity = Math.abs(ball.xVelocity);
+            ball.xVelocity++;
+            ball.setXDirection(-ball.xVelocity);
+
+            if(ball.yVelocity>0)
+                ball.yVelocity++;
+            else ball.yVelocity--;
+            ball.setYDirection(ball.yVelocity);
+        }
+
+        //adding points
+        if(ball.x <= 0) {
+            score.player2++;
+            rePaddles();
+            reBall();
+        }
+        if(ball.x >= GAME_WIDTH-BALL_DIAMETER) {
+            score.player1++;
+            rePaddles();
+            reBall();
         }
 
     }
